@@ -223,10 +223,11 @@ wl.click();
 var btn=document.querySelector('#f button[type=submit]');
 var ok=document.getElementById('ok');
 try{
-fetch('https://formsubmit.co/ajax/rahmaice254@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
-body:JSON.stringify({_subject:'New RAHMA ICE order from '+g('n'),_template:'table',_captcha:'false',
+fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+body:JSON.stringify({access_key:'75d2f00d-4a0b-4847-9d48-d754a339623b',subject:'New RAHMA ICE order from '+g('n'),from_name:'RAHMA ICE Website',
 Name:g('n'),Phone:g('p'),Order:document.getElementById('s').value,Quantity:g('q'),'Delivery location':g('l'),Details:g('m')||'-'})})
-.then(function(r){ok.textContent=r.ok?'Your order was also sent to our email. Thank you!':'';ok.style.display=r.ok?'block':'none'})
+.then(function(r){return r.json()})
+.then(function(d){ok.textContent=d.success?'Your order was also sent to our email. Thank you!':'';ok.style.display=d.success?'block':'none'})
 .catch(function(){});
 }catch(x){}
 });
