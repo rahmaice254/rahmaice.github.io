@@ -191,6 +191,7 @@ footer a{color:#fff}
 <div><label for="m">Extra details (optional)</label><textarea id="m" rows="3" placeholder="Preferred date, landmarks, anything else"></textarea></div>
 <p id="err" role="alert" style="color:#c0392b;margin:0;display:none"></p>
 <button class="btn" type="submit">Send order on WhatsApp</button>
+<p id="ok" style="margin:0;display:none;color:#1a7f37;font-weight:700"></p>
 <p id="fb" style="margin:0;display:none">If WhatsApp did not open, <a id="wl" href="#" target="_blank" rel="noopener">tap here to send your order</a>.</p>
 </form>
 </div>
@@ -215,10 +216,19 @@ var t='Hello RAHMA ICE, I would like to place an order.\n\n'+
 'Quantity: '+g('q')+'\n'+
 'Delivery location: '+g('l')+
 (g('m')?'\nDetails: '+g('m'):'');
-var url='https://wa.me/254732333555?text='+encodeURIComponent(t);
+var url='https://wa.me/254718055550?text='+encodeURIComponent(t);
 var wl=document.getElementById('wl');wl.href=url;
 document.getElementById('fb').style.display='block';
 wl.click();
+var btn=document.querySelector('#f button[type=submit]');
+var ok=document.getElementById('ok');
+try{
+fetch('https://formsubmit.co/ajax/rahmaice254@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+body:JSON.stringify({_subject:'New RAHMA ICE order from '+g('n'),_template:'table',_captcha:'false',
+Name:g('n'),Phone:g('p'),Order:document.getElementById('s').value,Quantity:g('q'),'Delivery location':g('l'),Details:g('m')||'-'})})
+.then(function(r){ok.textContent=r.ok?'Your order was also sent to our email. Thank you!':'';ok.style.display=r.ok?'block':'none'})
+.catch(function(){});
+}catch(x){}
 });
 </script>
 </body>
